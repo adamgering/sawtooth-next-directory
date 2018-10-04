@@ -3,10 +3,9 @@ jobs:
     - stage: backend
       language: python
       python:
-        - "3.6"
+        - "3.7"
       script:
-        - pytest --ignore=tests
-
+        - bin/build -i
     - stage: frontend
       language: node_js
       node_js:

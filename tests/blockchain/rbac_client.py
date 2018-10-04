@@ -7,13 +7,15 @@ from rbac_transaction_creation.user_transaction_creation import create_user
 from rbac_transaction_creation import role_transaction_creation
 from rbac_transaction_creation import task_transaction_creation
 
-
 from sawtooth_cli.rest_client import RestClient
 
+REST_ENDPOINT = 'http://rest-api:8008'
 
 class RbacClient(object):
 
     def __init__(self, url, key):
+        if url is None:
+            url = REST_ENDPOINT
         self._client = RestClient(base_url=url)
         self._key = key
         

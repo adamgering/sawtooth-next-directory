@@ -13,6 +13,7 @@
 # limitations under the License.
 # -----------------------------------------------------------------------------
 
+import pytest
 import unittest
 import logging
 from uuid import uuid4
@@ -21,18 +22,20 @@ from rbac_addressing.addresser import AddressSpace
 
 LOGGER = logging.getLogger(__name__)
 
+@pytest.mark.unit
+@pytest.mark.addressing
+class TestRoleOwnersAddresser(unittest.TestCase):
 
-class TestSysAdminMembersAddresser(unittest.TestCase):
-
-    def test_det_sysadmin_member_addr(self):
-        """Tests that a specific member_id generates the expected
-        sysadmin member address, and thus is probably deterministic.
+    def test_determine_role_owner_addr(self):
+        """Tests that a specific role_id and owner_id generates the
+        expected role owner address, and thus is probably deterministic.
         """
 
-        member_id = '966ab67317234df489adb4bc1f517b88'
-        expected_address = '9f4448000000000000000000000000\
-0000000000000000000000000000000000000083'
-        address = addresser.make_sysadmin_members_address(member_id)
+        role_id = '99968acb8f1a48b3a4bc21e2cd252e67'
+        owner_id = '966ab67317234df489adb4bc1f517b88'
+        expected_address = '9f444809326a1713a905b26359fc8d\
+a2817c1a5f67de6f464701f0c10042da345d2893'
+        address = addresser.make_role_owners_address(role_id, owner_id)
 
         self.assertEqual(len(address), addresser.ADDRESS_LENGTH,
                          "The address is 70 characters")
@@ -52,16 +55,17 @@ class TestSysAdminMembersAddresser(unittest.TestCase):
 
         self.assertEqual(
             addresser.address_is(address),
-            AddressSpace.SYSADMIN_MEMBERS,
-            "The address created must be a SysAdmin Attributes address.")
+            AddressSpace.ROLES_OWNERS,
+            "The address created must be a Role Attributes address.")
 
-    def test_gen_sysadmin_member_addr(self):
-        """Tests the sysadmin member address creation function as well as the
+    def test_generated_role_owner_addr(self):
+        """Tests the role owner address creation function as well as the
         address_is function.
         """
 
-        member_id = uuid4().hex
-        address = addresser.make_sysadmin_members_address(member_id)
+        role_id = uuid4().hex
+        owner_id = uuid4().hex
+        address = addresser.make_role_owners_address(role_id, owner_id)
 
         self.assertEqual(len(address), addresser.ADDRESS_LENGTH,
                          "The address is 70 characters")
@@ -78,5 +82,5 @@ class TestSysAdminMembersAddresser(unittest.TestCase):
 
         self.assertEqual(
             addresser.address_is(address),
-            AddressSpace.SYSADMIN_MEMBERS,
-            "The address created must be a SysAdmin Attributes address.")
+            AddressSpace.ROLES_OWNERS,
+            "The address created must be a Role Attributes address.")

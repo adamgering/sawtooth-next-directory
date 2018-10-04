@@ -13,6 +13,7 @@
 # limitations under the License.
 # -----------------------------------------------------------------------------
 
+import pytest
 import unittest
 import logging
 from uuid import uuid4
@@ -21,18 +22,19 @@ from rbac_addressing.addresser import AddressSpace
 
 LOGGER = logging.getLogger(__name__)
 
+@pytest.mark.unit
+@pytest.mark.addressing
+class TestSysAdminMembersAddresser(unittest.TestCase):
 
-class TestSysAdminAdminsAddresser(unittest.TestCase):
-
-    def test_det_sysadmin_admin_addr(self):
-        """Tests that a specific admin_id generates the expected
-        sysadmin admin address, and thus is probably deterministic.
+    def test_det_sysadmin_member_addr(self):
+        """Tests that a specific member_id generates the expected
+        sysadmin member address, and thus is probably deterministic.
         """
 
-        admin_id = '966ab67317234df489adb4bc1f517b88'
+        member_id = '966ab67317234df489adb4bc1f517b88'
         expected_address = '9f4448000000000000000000000000\
-00000000000000000000000000000000000000f7'
-        address = addresser.make_sysadmin_admins_address(admin_id)
+0000000000000000000000000000000000000083'
+        address = addresser.make_sysadmin_members_address(member_id)
 
         self.assertEqual(len(address), addresser.ADDRESS_LENGTH,
                          "The address is 70 characters")
@@ -52,17 +54,16 @@ class TestSysAdminAdminsAddresser(unittest.TestCase):
 
         self.assertEqual(
             addresser.address_is(address),
-            AddressSpace.SYSADMIN_ADMINS,
+            AddressSpace.SYSADMIN_MEMBERS,
             "The address created must be a SysAdmin Attributes address.")
 
-
-    def test_gen_sysadmin_admin_addr(self):
-        """Tests the sysadmin admin address creation function as well as the
+    def test_gen_sysadmin_member_addr(self):
+        """Tests the sysadmin member address creation function as well as the
         address_is function.
         """
 
-        admin_id = uuid4().hex
-        address = addresser.make_sysadmin_admins_address(admin_id)
+        member_id = uuid4().hex
+        address = addresser.make_sysadmin_members_address(member_id)
 
         self.assertEqual(len(address), addresser.ADDRESS_LENGTH,
                          "The address is 70 characters")
@@ -79,5 +80,5 @@ class TestSysAdminAdminsAddresser(unittest.TestCase):
 
         self.assertEqual(
             addresser.address_is(address),
-            AddressSpace.SYSADMIN_ADMINS,
+            AddressSpace.SYSADMIN_MEMBERS,
             "The address created must be a SysAdmin Attributes address.")

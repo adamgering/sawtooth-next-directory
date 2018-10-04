@@ -55,7 +55,7 @@ do
             ;;
         t)
             info "Running tests"
-            pytest
+            $TOP_DIR/bin/run_docker_test $TOP_DIR/tests/docker-compose.yaml
             ;;
         l)
             info "Running lint"
@@ -63,8 +63,8 @@ do
             docker run --rm -v $(pwd):/project/tmobile-rbac rbac-test-env bin/run_lint
             ;;
         i)
-            info "Running integration tests"
-            $TOP_DIR/bin/run_docker_test $TOP_DIR/tests/blockchain/docker-compose.yaml
+            info "Running tests"
+            $TOP_DIR/bin/run_docker_test $TOP_DIR/tests/docker-compose.yaml
             ;;
         a)
             docker build . -f tests/blockchain/Dockerfile -t rbac-test-env
@@ -74,8 +74,8 @@ do
             docker run --rm -v $(pwd):/project/tmobile-rbac rbac-test-env bin/run_lint
             info "Running tests"
             pytest
-            info "Running integration tests"
-            $TOP_DIR/bin/run_docker_test $TOP_DIR/tests/blockchain/docker-compose.yaml
+            info "Running tests"
+            $TOP_DIR/bin/run_docker_test $TOP_DIR/tests/docker-compose.yaml
             ;;
         \?)
             usage

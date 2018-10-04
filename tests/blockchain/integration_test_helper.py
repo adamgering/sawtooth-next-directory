@@ -16,7 +16,6 @@ LOGGER.addHandler(logging.StreamHandler(sys.stdout))
 BATCHER_PRIVATE_KEY = Secp256k1PrivateKey.new_random().as_hex()
 BATCHER_KEY = Key(BATCHER_PRIVATE_KEY)
 
-
 class IntegrationTestHelper:
     """ A singleton test helper ensuring the Docker containers
     are up and available to be tested against."""
@@ -31,7 +30,7 @@ class IntegrationTestHelper:
         def __check_containers(self):
             if not self.__available:
                 LOGGER.debug("Waiting for containers to start")
-                __wait_for_rest_apis__(['rest-api:8080'])
+                __wait_for_rest_apis__(['rest-api:8008'])
                 self.__available = True
             else:
                 LOGGER.debug("Containers already started. Proceeding...")

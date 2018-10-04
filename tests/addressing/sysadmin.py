@@ -13,6 +13,7 @@
 # limitations under the License.
 # -----------------------------------------------------------------------------
 
+import pytest
 import unittest
 import logging
 from rbac_addressing import addresser
@@ -20,7 +21,8 @@ from rbac_addressing.addresser import AddressSpace
 
 LOGGER = logging.getLogger(__name__)
 
-
+@pytest.mark.unit
+@pytest.mark.addressing
 class TestSysAdminAttributesAddresser(unittest.TestCase):
 
     def test_determine_sysadmin_addr(self):

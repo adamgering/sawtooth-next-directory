@@ -15,6 +15,7 @@
 
 import sys
 import logging
+import pytest
 import unittest
 
 from uuid import uuid4
@@ -25,13 +26,13 @@ LOGGER = logging.getLogger(__name__)
 LOGGER.level = logging.DEBUG
 LOGGER.addHandler(logging.StreamHandler(sys.stdout))
 
-
+@pytest.mark.integration
 class TestOrgHierarchy(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         cls.test_helper = IntegrationTestHelper()
-        cls.client = RbacClient('http://rest-api:8080', IntegrationTestHelper.get_batcher_key())
+        cls.client = RbacClient(None, IntegrationTestHelper.get_batcher_key())
         cls.key1, cls.user1 = cls.test_helper.make_key_and_name()
         cls.key2a, cls.user2a = cls.test_helper.make_key_and_name()
         cls.key3a, cls.user3a = cls.test_helper.make_key_and_name()

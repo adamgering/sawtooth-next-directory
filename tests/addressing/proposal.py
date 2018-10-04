@@ -13,6 +13,7 @@
 # limitations under the License.
 # -----------------------------------------------------------------------------
 
+import pytest
 import unittest
 import logging
 from uuid import uuid4
@@ -21,7 +22,8 @@ from rbac_addressing.addresser import AddressSpace
 
 LOGGER = logging.getLogger(__name__)
 
-
+@pytest.mark.unit
+@pytest.mark.addressing
 class TestProposalAddresser(unittest.TestCase):
 
     def test_determine_proposal_addr(self):
